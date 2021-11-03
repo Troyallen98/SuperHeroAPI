@@ -24,18 +24,13 @@ echo "Connected successfully";
 
 
 // define functions
-function create() {
+function create($name, $about_me, $biography) {
     print_r ($_GET);
-    $name = 'Ian';
-    $about_me = 'coder';
-    $biography = 'ahdjkal';
+    
     $SQL = "INSERT INTO heroes (name, about_me, biography) 
             VALUES ('$name', '$about_me', '$biography')";
     echo $SQL;
 }
-
-
-
 
 
 // codeanywhere.bhalbkah.com/Hero_API/Hero.php?action=read
@@ -43,7 +38,7 @@ if (isset($_GET['action'])) {
     $action = $_GET['action'];
     switch ($action) {
         case "create":
-            create();
+            create($name, $about_me, $biography);
             break;
         case "read":
             echo "read thing";
