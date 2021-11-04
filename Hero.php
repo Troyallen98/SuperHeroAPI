@@ -31,6 +31,18 @@ function create($name, $about_me, $biography) {
             VALUES ('$name', '$about_me', '$biography')";
     echo $SQL;
 }
+function read() {
+
+    $SQL = "SELECT name, about_me, biography FROM heroes WHERE 1";
+
+    echo $SQL;
+}
+
+function update($name, $about_me, $biography) {
+    $SQL = "UPDATE heroes SET name=[$name],about_me=[$about_me],biography=[$biography] WHERE 1";
+
+    echo $SQL;
+}
 
 
 // codeanywhere.bhalbkah.com/Hero_API/Hero.php?action=read
@@ -41,10 +53,10 @@ if (isset($_GET['action'])) {
             create($name, $about_me, $biography);
             break;
         case "read":
-            echo "read thing";
+            read();
             break;
         case "update":
-            echo "updated thing";
+            update($name, $about_me, $biography);
             break;
         case "delete":
             echo "deleted thing";
