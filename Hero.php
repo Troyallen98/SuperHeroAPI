@@ -24,7 +24,8 @@ echo "Connected successfully";
 
 
 // define functions
-function create(){
+function create()
+{
 
     $name = $_POST['name'];
     $about_me = $_POST['about_me'];
@@ -90,6 +91,29 @@ function delete()
     }
 }
 
+function hero_ability()
+{
+    $SQL = "SELECT heroes.name, heroes.about_me, 
+            GROUP_CONCAT(ability_type.ability SEPARATOR ', ') AS powers
+            FROM heroes
+            INNER JOIN abilities
+                ON heroes.id = abilities.hero_id
+            INNER JOIN ability_type
+                ON ability_type.id = abilities.ability_id
+            GROUP BY heroes.name";
+            
+    global $conn;
+    $result = $conn->query($SQL);
+    if ($result->num_rows > 0) {
+        // output data of each row
+        while ($row = $result->fetch_assoc()) {
+            echo "<br> - Name: " . $row["name"] . " <br> - about me: " . $row["about_me"] . " <br> - ability: ". $row["ability"] . " " . "<br>";
+        }
+    } else {
+        echo "0 results";
+    }
+}
+
 // codeanywhere.bhalbkah.com/Hero_API/Hero.php?action=read
 if (isset($_GET['action'])) {
     $action = $_GET['action'];
@@ -106,8 +130,11 @@ if (isset($_GET['action'])) {
         case "delete":
             delete();
             break;
+        case "hero-ability";
+            hero_ability();
+            break;
         default:
-            echo "init thing";
+            echo "404 Error";
     }
 } else {
     // action not set, do something
