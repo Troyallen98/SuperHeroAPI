@@ -20,12 +20,11 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-echo "Connected successfully";
+// echo "Connected successfully";
 
 
 // define functions
-function create()
-{
+function create(){
 
     $name = $_POST['name'];
     $about_me = $_POST['about_me'];
@@ -41,8 +40,7 @@ function create()
         echo "Error: " . $SQL . "<br>" . $conn->error;
     }
 }
-function read()
-{
+function read(){
 
     $SQL = "SELECT name, about_me, biography FROM heroes";
 
@@ -58,10 +56,11 @@ function read()
     } else {
         echo "0 results";
     }
+    // show error if sql failed
 }
 
-function update()
-{
+function update(){
+    // if missing, tell user what is missing (error 422)
     $id = $_POST['id'];
     $name = $_POST['name'];
     $about_me = $_POST['about_me'];
@@ -77,8 +76,7 @@ function update()
     }
 }
 
-function delete()
-{
+function delete(){
     $id = $_GET['id'];
     $SQL = "DELETE FROM heroes WHERE heroes.id = $id";
 
@@ -91,8 +89,7 @@ function delete()
     }
 }
 
-function hero_ability()
-{
+function hero_ability(){
     $SQL = "SELECT heroes.name, heroes.about_me, 
             GROUP_CONCAT(ability_type.ability SEPARATOR ', ') AS powers
             FROM heroes
@@ -135,10 +132,14 @@ if (isset($_GET['action'])) {
             break;
         default:
             echo "404 Error";
-    }
-} else {
+        }
+    } else {
+        echo "welcome to the SQL heroes database!";
     // action not set, do something
 }
+
+$conn->close();
+
 
 
 
